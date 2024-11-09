@@ -4,18 +4,20 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Entity
+@Table(name = "itens_pedido")
 public class ItensPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_itens_pedido;
+    private Integer idItensPedido;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedidos")
-    private Pedidos pedido_id;
+    private Pedidos pedido;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "produto_id", referencedColumnName = "id_produtos")
-    private Produto produto_id;
+    private Produto produto;
 
     @Column
     private Integer quantidade;
@@ -23,28 +25,28 @@ public class ItensPedido {
     @Column
     private Number preco_produtos;
 
-    public Integer getId_itens_pedido() {
-        return id_itens_pedido;
+    public Integer getIdItensPedido() {
+        return idItensPedido;
     }
 
-    public void setId_itens_pedido(Integer id_itens_pedido) {
-        this.id_itens_pedido = id_itens_pedido;
+    public void setIdItensPedido(Integer idItensPedido) {
+        this.idItensPedido = idItensPedido;
     }
 
-    public Pedidos getPedido_id() {
-        return pedido_id;
+    public Pedidos getPedido() {
+        return pedido;
     }
 
-    public void setPedido_id(Pedidos pedido_id) {
-        this.pedido_id = pedido_id;
+    public void setPedido(Pedidos pedido) {
+        this.pedido = pedido;
     }
 
-    public Produto getProduto_id() {
-        return produto_id;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setProduto_id(Produto produto_id) {
-        this.produto_id = produto_id;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public Integer getQuantidade() {
@@ -68,11 +70,11 @@ public class ItensPedido {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItensPedido that = (ItensPedido) o;
-        return Objects.equals(id_itens_pedido, that.id_itens_pedido) && Objects.equals(pedido_id, that.pedido_id) && Objects.equals(produto_id, that.produto_id) && Objects.equals(quantidade, that.quantidade) && Objects.equals(preco_produtos, that.preco_produtos);
+        return Objects.equals(idItensPedido, that.idItensPedido) && Objects.equals(pedido, that.pedido) && Objects.equals(produto, that.produto) && Objects.equals(quantidade, that.quantidade) && Objects.equals(preco_produtos, that.preco_produtos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_itens_pedido, pedido_id, produto_id, quantidade, preco_produtos);
+        return Objects.hash(idItensPedido, pedido, produto, quantidade, preco_produtos);
     }
 }

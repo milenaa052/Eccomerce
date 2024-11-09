@@ -1,11 +1,13 @@
 package eccomerce.milena.Ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "produtos")
 public class Produto {
 
     @Id
@@ -16,7 +18,7 @@ public class Produto {
     private String descricao;
 
     @Column
-    private Number preco_un;
+    private Double preco_un;
 
     @Column
     private Integer quantidade;
@@ -26,7 +28,11 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id_categoria")
-    private Categoria categoria_id;
+    private Categoria categoria;
+
+    @OneToMany(mappedBy = "produto")
+    @JsonIgnoreProperties("produto")
+    private List<ItensPedido> produtos;
 
     public Integer getId_produtos() {
         return id_produtos;
@@ -52,11 +58,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public Number getPreco_un() {
+    public Double getPreco_un() {
         return preco_un;
     }
 
-    public void setPreco_un(Number preco_un) {
+    public void setPreco_un(Double preco_un) {
         this.preco_un = preco_un;
     }
 
@@ -69,11 +75,19 @@ public class Produto {
     }
 
     public Categoria getCategoria_id() {
-        return categoria_id;
+        return categoria;
     }
 
-    public void setCategoria_id(Categoria categoria_id) {
-        this.categoria_id = categoria_id;
+    public void setCategoria_id(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<ItensPedido> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<ItensPedido> produtos) {
+        this.produtos = produtos;
     }
 
     @Override
@@ -81,11 +95,11 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(id_produtos, produto.id_produtos) && Objects.equals(descricao, produto.descricao) && Objects.equals(preco_un, produto.preco_un) && Objects.equals(quantidade, produto.quantidade) && Objects.equals(cor, produto.cor) && Objects.equals(categoria_id, produto.categoria_id);
+        return Objects.equals(id_produtos, produto.id_produtos) && Objects.equals(descricao, produto.descricao) && Objects.equals(preco_un, produto.preco_un) && Objects.equals(quantidade, produto.quantidade) && Objects.equals(cor, produto.cor) && Objects.equals(categoria, produto.categoria);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_produtos, descricao, preco_un, quantidade, cor, categoria_id);
+        return Objects.hash(id_produtos, descricao, preco_un, quantidade, cor, categoria);
     }
 }

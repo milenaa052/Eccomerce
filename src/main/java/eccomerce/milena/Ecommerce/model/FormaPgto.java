@@ -4,14 +4,15 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Entity @Table(name = "forma_pgto")
 public class FormaPgto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_formPgto;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pagamento_id", referencedColumnName = "id_pagamentos")
-    private Pagamentos pagamento_id;
+    private Pagamentos pagamento;
 
     @Column
     private String forma_pgto;
@@ -27,12 +28,12 @@ public class FormaPgto {
         this.id_formPgto = id_formPgto;
     }
 
-    public Pagamentos getPagamento_id() {
-        return pagamento_id;
+    public Pagamentos getPagamento() {
+        return pagamento;
     }
 
-    public void setPagamento_id(Pagamentos pagamento_id) {
-        this.pagamento_id = pagamento_id;
+    public void setPagamento(Pagamentos pagamento) {
+        this.pagamento = pagamento;
     }
 
     public String getForma_pgto() {
@@ -56,11 +57,11 @@ public class FormaPgto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FormaPgto formaPgto = (FormaPgto) o;
-        return Objects.equals(id_formPgto, formaPgto.id_formPgto) && Objects.equals(pagamento_id, formaPgto.pagamento_id) && Objects.equals(forma_pgto, formaPgto.forma_pgto) && Objects.equals(qntd_parcelas, formaPgto.qntd_parcelas);
+        return Objects.equals(id_formPgto, formaPgto.id_formPgto) && Objects.equals(pagamento, formaPgto.pagamento) && Objects.equals(forma_pgto, formaPgto.forma_pgto) && Objects.equals(qntd_parcelas, formaPgto.qntd_parcelas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_formPgto, pagamento_id, forma_pgto, qntd_parcelas);
+        return Objects.hash(id_formPgto, pagamento, forma_pgto, qntd_parcelas);
     }
 }

@@ -1,9 +1,12 @@
 package eccomerce.milena.Ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table
+@Table(name = "categorias")
 public class Categoria {
 
     @Id
@@ -12,6 +15,10 @@ public class Categoria {
 
     @Column
     private String nome;
+
+    @OneToMany(mappedBy = "categoria")
+    @JsonIgnoreProperties("categoria")
+    private List<Produto> produtos;
 
     public Integer getId_categoria() {
         return id_categoria;
@@ -27,5 +34,13 @@ public class Categoria {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

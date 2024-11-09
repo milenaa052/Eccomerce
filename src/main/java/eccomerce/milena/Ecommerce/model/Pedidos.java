@@ -1,9 +1,13 @@
 package eccomerce.milena.Ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
+@Entity
+@Table(name = "pedidos")
 public class Pedidos {
 
     @Id
@@ -14,7 +18,11 @@ public class Pedidos {
     private Date data;
 
     @Column
-    private Number total;
+    private Double total;
+
+    @OneToMany(mappedBy = "pedido")
+    @JsonIgnoreProperties("pedido")
+    private List<ItensPedido> pedidos;
 
     public Integer getId_pedidos() {
         return id_pedidos;
@@ -32,11 +40,19 @@ public class Pedidos {
         this.data = data;
     }
 
-    public Number getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(Number total) {
+    public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public List<ItensPedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<ItensPedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }
