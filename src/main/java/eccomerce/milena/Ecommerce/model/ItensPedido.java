@@ -57,7 +57,7 @@ public class ItensPedido {
         this.quantidade = quantidade;
     }
 
-    public Number getPreco_produtos() {
+    public Double getPreco_produtos() {
         return preco_produtos;
     }
 
