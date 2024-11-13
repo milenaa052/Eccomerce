@@ -1,4 +1,6 @@
 package eccomerce.milena.Ecommerce.dto;
 
-public record ProdutoRequestDTO(String nome) {
+import eccomerce.milena.Ecommerce.model.Categoria;
+
+public record ProdutoRequestDTO(String descricao, Double preco_un, Integer quantidade, String cor, Categoria categoria_id) {
 }

@@ -1,4 +1,8 @@
 package eccomerce.milena.Ecommerce.dto;
 
-public record PedidoRequestDTO(String nome) {
+import eccomerce.milena.Ecommerce.model.ItensPedido;
+
+import java.util.Date;
+
+public record PedidoRequestDTO(Date date, Double total, ItensPedido pedidos) {
 }
