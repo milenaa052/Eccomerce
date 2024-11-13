@@ -1,4 +1,6 @@
 package eccomerce.milena.Ecommerce.dto;
 
-public record FormaPgtoRequestDTO(String nome) {
+import eccomerce.milena.Ecommerce.model.Pagamentos;
+
+public record FormaPgtoRequestDTO(Pagamentos pagamento, String form_pgto, Integer qntd_parcelas) {
 }
