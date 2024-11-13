@@ -23,7 +23,7 @@ public class ItensPedido {
     private Integer quantidade;
 
     @Column
-    private Number preco_produtos;
+    private Double preco_produtos;
 
     public Integer getIdItensPedido() {
         return idItensPedido;
@@ -61,7 +61,7 @@ public class ItensPedido {
         return preco_produtos;
     }
 
-    public void setPreco_produtos(Number preco_produtos) {
+    public void setPreco_produtos(Double preco_produtos) {
         this.preco_produtos = preco_produtos;
     }
 
