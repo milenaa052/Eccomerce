@@ -20,7 +20,7 @@ CREATE TABLE Pedidos (
 );
 
 CREATE TABLE Itens_Pedido (
-  id_itens_pedido INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (pedido_id, produto_id),
   pedido_id INT,
   produto_id INT,
   quantidade INT NOT NULL,

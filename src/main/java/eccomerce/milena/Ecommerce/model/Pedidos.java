@@ -22,7 +22,7 @@ public class Pedidos {
 
     @OneToMany(mappedBy = "pedido")
     @JsonIgnoreProperties("pedido")
-    private List<ItensPedido> pedidos;
+    private List<ItensPedido> itensPedidos;
 
     public Integer getId_pedidos() {
         return id_pedidos;
@@ -49,10 +49,10 @@ public class Pedidos {
     }
 
     public List<ItensPedido> getPedidos() {
-        return pedidos;
+        return itensPedidos;
     }
 
-    public void setPedidos(List<ItensPedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setPedidos(List<ItensPedido> itensPedidos) {
+        this.itensPedidos = itensPedidos;
     }
 }

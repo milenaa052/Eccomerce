@@ -1,36 +1,43 @@
 package eccomerce.milena.Ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "itens_pedido")
 public class ItensPedido {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idItensPedido;
+
+    @EmbeddedId
+    private ItensPedidoPK id;
 
     @ManyToOne
+    @MapsId("pedido_id")
     @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedidos")
+    @JsonIgnoreProperties("pedidos")
     private Pedidos pedido;
 
     @ManyToOne
+    @MapsId("produto_id")
     @JoinColumn(name = "produto_id", referencedColumnName = "id_produtos")
+    @JsonIgnoreProperties("produtos")
     private Produto produto;
 
     @Column
     private Integer quantidade;
 
-    @Column
+    @Column(nullable = false)
+    @PositiveOrZero
     private Double preco_produtos;
 
-    public Integer getIdItensPedido() {
-        return idItensPedido;
+    public ItensPedidoPK getId() {
+        return id;
     }
 
-    public void setIdItensPedido(Integer idItensPedido) {
-        this.idItensPedido = idItensPedido;
+    public void setId(ItensPedidoPK id) {
+        this.id = id;
     }
 
     public Pedidos getPedido() {
@@ -63,18 +70,5 @@ public class ItensPedido {
 
     public void setPreco_produtos(Double preco_produtos) {
         this.preco_produtos = preco_produtos;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItensPedido that = (ItensPedido) o;
-        return Objects.equals(idItensPedido, that.idItensPedido) && Objects.equals(pedido, that.pedido) && Objects.equals(produto, that.produto) && Objects.equals(quantidade, that.quantidade) && Objects.equals(preco_produtos, that.preco_produtos);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idItensPedido, pedido, produto, quantidade, preco_produtos);
     }
 }
