@@ -32,7 +32,7 @@ public class Produto {
 
     @OneToMany(mappedBy = "produto")
     @JsonIgnoreProperties("produto")
-    private List<ItensPedido> produtos;
+    private List<ItensPedido> itensPedidos;
 
     public Integer getId_produtos() {
         return id_produtos;
@@ -83,11 +83,11 @@ public class Produto {
     }
 
     public List<ItensPedido> getProdutos() {
-        return produtos;
+        return itensPedidos;
     }
 
-    public void setProdutos(List<ItensPedido> produtos) {
-        this.produtos = produtos;
+    public void setProdutos(List<ItensPedido> itensPedidos) {
+        this.itensPedidos = itensPedidos;
     }
 
     @Override
