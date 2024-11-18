@@ -37,8 +37,7 @@ CREATE TABLE Pagamentos (
 );
 
 CREATE TABLE Forma_PGTO (
-  id_formPgto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  pagamento_id INT,
+  pagamento_id INT PRIMARY KEY,
   forma_pgto VARCHAR(50) NOT NULL,
   qntd_parcelas INT,
   FOREIGN KEY (pagamento_id) REFERENCES Pagamentos(id_pagamentos)
