@@ -8,26 +8,26 @@ import java.util.Objects;
 @Embeddable
 public class ItensPedidoPK {
 
-    @Column(name = "pedido_id")
-    private Integer pedido_id;
+    @Column(name = "pedidoId")
+    private Integer pedidoId;
 
-    @Column(name = "produto_id")
-    private Integer produto_id;
+    @Column(name = "produtoId")
+    private Integer produtoId;
 
-    public Integer getProduto_id() {
-        return produto_id;
+    public Integer getProdutoId() {
+        return produtoId;
     }
 
-    public void setProduto_id(Integer produto_id) {
-        this.produto_id = produto_id;
+    public void setProdutoId(Integer produtoId) {
+        this.produtoId = produtoId;
     }
 
-    public Integer getPedido_id() {
-        return pedido_id;
+    public Integer getPedidoId() {
+        return pedidoId;
     }
 
-    public void setPedido_id(Integer pedido_id) {
-        this.pedido_id = pedido_id;
+    public void setPedidoId(Integer pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
     @Override
@@ -35,11 +35,11 @@ public class ItensPedidoPK {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItensPedidoPK that = (ItensPedidoPK) o;
-        return Objects.equals(pedido_id, that.pedido_id) && Objects.equals(produto_id, that.produto_id);
+        return Objects.equals(pedidoId, that.pedidoId) && Objects.equals(produtoId, that.produtoId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pedido_id, produto_id);
+        return Objects.hash(pedidoId, produtoId);
     }
 }

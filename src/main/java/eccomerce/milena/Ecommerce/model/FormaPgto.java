@@ -5,29 +5,29 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "forma_pgto")
+@Table(name = "FormaPGTO")
 public class FormaPgto extends Pagamentos{
 
     @Column
-    private String forma_pgto;
+    private String formaPgto;
 
     @Column
-    private Integer qntd_parcelas;
+    private Integer qntdParcelas;
 
-    public String getForma_pgto() {
-        return forma_pgto;
+    public String getFormaPgto() {
+        return formaPgto;
     }
 
-    public void setForma_pgto(String forma_pgto) {
-        this.forma_pgto = forma_pgto;
+    public void setFormaPgto(String formaPgto) {
+        this.formaPgto = formaPgto;
     }
 
-    public Integer getQntd_parcelas() {
-        return qntd_parcelas;
+    public Integer getQntdParcelas() {
+        return qntdParcelas;
     }
 
-    public void setQntd_parcelas(Integer qntd_parcelas) {
-        this.qntd_parcelas = qntd_parcelas;
+    public void setQntdParcelas(Integer qntdParcelas) {
+        this.qntdParcelas = qntdParcelas;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class FormaPgto extends Pagamentos{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         FormaPgto formaPgto = (FormaPgto) o;
-        return Objects.equals(forma_pgto, formaPgto.forma_pgto) && Objects.equals(qntd_parcelas, formaPgto.qntd_parcelas);
+        return Objects.equals(formaPgto, formaPgto.formaPgto) && Objects.equals(qntdParcelas, formaPgto.qntdParcelas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), forma_pgto, qntd_parcelas);
+        return Objects.hash(super.hashCode(), formaPgto, qntdParcelas);
     }
 }

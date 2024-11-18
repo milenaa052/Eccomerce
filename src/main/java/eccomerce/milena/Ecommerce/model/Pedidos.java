@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "pedidos")
+@Table(name = "Pedidos")
 public class Pedidos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pedidos;
+    private Integer idPedidos;
 
     @Column
     private Date data;
@@ -24,12 +24,12 @@ public class Pedidos {
     @JsonIgnoreProperties("pedido")
     private List<ItensPedido> itensPedidos;
 
-    public Integer getId_pedidos() {
-        return id_pedidos;
+    public Integer getIdPedidos() {
+        return idPedidos;
     }
 
-    public void setId_pedidos(Integer id_pedidos) {
-        this.id_pedidos = id_pedidos;
+    public void setIdPedidos(Integer idPedidos) {
+        this.idPedidos = idPedidos;
     }
 
     public Date getData() {
