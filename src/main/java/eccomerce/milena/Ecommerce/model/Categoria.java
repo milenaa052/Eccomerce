@@ -6,12 +6,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "categorias")
+@Table(name = "Categorias")
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_categoria;
+    private Integer idCategoria;
 
     @Column
     private String nome;
@@ -20,12 +20,12 @@ public class Categoria {
     @JsonIgnoreProperties("categoria")
     private List<Produto> produtos;
 
-    public Integer getId_categoria() {
-        return id_categoria;
+    public Integer getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setId_categoria(Integer id_categoria) {
-        this.id_categoria = id_categoria;
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getNome() {

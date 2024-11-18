@@ -5,26 +5,26 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "pagamentos")
+@Table(name = "Pagamentos")
 
 public class Pagamentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pagamentos;
+    private Integer idPagamentos;
 
     @OneToOne
-    @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedidos")
+    @JoinColumn(name = "pedidoId", referencedColumnName = "idPedidos")
     private Pedidos pedido;
 
     @Column
-    private String meio_pagamento;
+    private String meioPagamento;
 
-    public Integer getId_pagamentos() {
-        return id_pagamentos;
+    public Integer getIdPagamentos() {
+        return idPagamentos;
     }
 
-    public void setId_pagamentos(Integer id_pagamentos) {
-        this.id_pagamentos = id_pagamentos;
+    public void setIdPagamentos(Integer idPagamentos) {
+        this.idPagamentos = idPagamentos;
     }
 
     public Pedidos getPedido() {
@@ -35,12 +35,12 @@ public class Pagamentos {
         this.pedido = pedido;
     }
 
-    public String getMeio_pagamento() {
-        return meio_pagamento;
+    public String getMeioPagamento() {
+        return meioPagamento;
     }
 
-    public void setMeio_pagamento(String meio_pagamento) {
-        this.meio_pagamento = meio_pagamento;
+    public void setMeioPagamento(String meioPagamento) {
+        this.meioPagamento = meioPagamento;
     }
 
     @Override
@@ -48,11 +48,11 @@ public class Pagamentos {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pagamentos that = (Pagamentos) o;
-        return Objects.equals(id_pagamentos, that.id_pagamentos) && Objects.equals(pedido, that.pedido) && Objects.equals(meio_pagamento, that.meio_pagamento);
+        return Objects.equals(idPagamentos, that.idPagamentos) && Objects.equals(pedido, that.pedido) && Objects.equals(meioPagamento, that.meioPagamento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_pagamentos, pedido, meio_pagamento);
+        return Objects.hash(idPagamentos, pedido, meioPagamento);
     }
 }

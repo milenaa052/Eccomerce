@@ -7,21 +7,21 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Entity
-@Table(name = "itens_pedido")
+@Table(name = "ItensPedido")
 public class ItensPedido {
 
     @EmbeddedId
     private ItensPedidoPK id;
 
     @ManyToOne
-    @MapsId("pedido_id")
-    @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedidos")
+    @MapsId("pedidoId")
+    @JoinColumn(name = "pedidoId", referencedColumnName = "IdPedidos")
     @JsonIgnoreProperties("pedidos")
     private Pedidos pedido;
 
     @ManyToOne
-    @MapsId("produto_id")
-    @JoinColumn(name = "produto_id", referencedColumnName = "id_produtos")
+    @MapsId("produtoId")
+    @JoinColumn(name = "produtoId", referencedColumnName = "idProdutos")
     @JsonIgnoreProperties("produtos")
     private Produto produto;
 
@@ -30,7 +30,7 @@ public class ItensPedido {
 
     @Column(nullable = false)
     @PositiveOrZero
-    private Double preco_produtos;
+    private Double precoProdutos;
 
     public ItensPedidoPK getId() {
         return id;
@@ -64,11 +64,11 @@ public class ItensPedido {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco_produtos() {
-        return preco_produtos;
+    public Double getPrecoProdutos() {
+        return precoProdutos;
     }
 
-    public void setPreco_produtos(Double preco_produtos) {
-        this.preco_produtos = preco_produtos;
+    public void setPrecoProdutos(Double precoProdutos) {
+        this.precoProdutos = precoProdutos;
     }
 }

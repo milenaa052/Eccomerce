@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "produtos")
+@Table(name = "Produtos")
 public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_produtos;
+    private Integer idProdutos;
 
     @Column
     private String descricao;
 
     @Column
-    private Double preco_un;
+    private Double precoUn;
 
     @Column
     private Integer quantidade;
@@ -27,19 +27,19 @@ public class Produto {
     private String cor;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id_categoria")
+    @JoinColumn(name = "categoriaId", referencedColumnName = "idCategoria")
     private Categoria categoria;
 
     @OneToMany(mappedBy = "produto")
     @JsonIgnoreProperties("produto")
     private List<ItensPedido> itensPedidos;
 
-    public Integer getId_produtos() {
-        return id_produtos;
+    public Integer getIdProdutos() {
+        return idProdutos;
     }
 
-    public void setId_produtos(Integer id_produtos) {
-        this.id_produtos = id_produtos;
+    public void setIdProdutos(Integer idProdutos) {
+        this.idProdutos = idProdutos;
     }
 
     public String getDescricao() {
@@ -58,12 +58,12 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco_un() {
-        return preco_un;
+    public Double getPrecoUn() {
+        return precoUn;
     }
 
-    public void setPreco_un(Double preco_un) {
-        this.preco_un = preco_un;
+    public void setPrecoUn(Double precoUn) {
+        this.precoUn = precoUn;
     }
 
     public String getCor() {
@@ -74,11 +74,11 @@ public class Produto {
         this.cor = cor;
     }
 
-    public Categoria getCategoria_id() {
+    public Categoria getCategoriaId() {
         return categoria;
     }
 
-    public void setCategoria_id(Categoria categoria) {
+    public void setCategoriaId(Categoria categoria) {
         this.categoria = categoria;
     }
 
@@ -95,11 +95,11 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(id_produtos, produto.id_produtos) && Objects.equals(descricao, produto.descricao) && Objects.equals(preco_un, produto.preco_un) && Objects.equals(quantidade, produto.quantidade) && Objects.equals(cor, produto.cor) && Objects.equals(categoria, produto.categoria);
+        return Objects.equals(idProdutos, produto.idProdutos) && Objects.equals(descricao, produto.descricao) && Objects.equals(precoUn, produto.precoUn) && Objects.equals(quantidade, produto.quantidade) && Objects.equals(cor, produto.cor) && Objects.equals(categoria, produto.categoria);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_produtos, descricao, preco_un, quantidade, cor, categoria);
+        return Objects.hash(idProdutos, descricao, precoUn, quantidade, cor, categoria);
     }
 }

@@ -38,10 +38,10 @@ public class ProdutoController {
 
         Produto produto = new Produto();
         produto.setDescricao(dto.descricao());
-        produto.setPreco_un(dto.preco_un());
+        produto.setPrecoUn(dto.precoUn());
         produto.setQuantidade(dto.quantidade());
         produto.setCor(dto.cor());
-        produto.setCategoria_id(dto.categoria_id());
+        produto.setCategoriaId(dto.categoriaId());
 
         this.repository.save(produto);
         return ResponseEntity.ok(produto);
@@ -68,10 +68,10 @@ public class ProdutoController {
                         new IllegalArgumentException("Produto não encontrado"));
 
         produto.setDescricao(dto.descricao());
-        produto.setPreco_un(dto.preco_un());
+        produto.setPrecoUn(dto.precoUn());
         produto.setQuantidade(dto.quantidade());
         produto.setCor(dto.cor());
-        produto.setCategoria_id(dto.categoria_id());
+        produto.setCategoriaId(dto.categoriaId());
 
         this.repository.save(produto);
         return ResponseEntity.ok(produto);

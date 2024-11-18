@@ -1,44 +1,44 @@
 CREATE TABLE Categorias (
-  id_categoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  idCategoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Produtos (
-  id_produtos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  idProdutos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   descricao VARCHAR(255) NOT NULL,
-  preco_un DECIMAL(10,2) NOT NULL,
+  precoUn DECIMAL(10,2) NOT NULL,
   quantidade INT NOT NULL,
   cor VARCHAR(50),
-  categoria_id INT,
-  FOREIGN KEY (categoria_id) REFERENCES Categorias(id_categoria)
+  categoriaId INT,
+  FOREIGN KEY (categoriaId) REFERENCES Categorias(idCategoria)
 );
 
 CREATE TABLE Pedidos (
-  id_pedidos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  idPedidos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   data DATE NOT NULL,
   total DECIMAL(10,2) NOT NULL
 );
 
-CREATE TABLE Itens_Pedido (
-  PRIMARY KEY (pedido_id, produto_id),
-  pedido_id INT,
-  produto_id INT,
+CREATE TABLE ItensPedido (
+  PRIMARY KEY (pedidoId, produtoId),
+  pedidoId INT,
+  produtoId INT,
   quantidade INT NOT NULL,
-  preco_produtos DECIMAL(10,2) NOT NULL,
-  FOREIGN KEY (pedido_id) REFERENCES Pedidos(id_pedidos),
-  FOREIGN KEY (produto_id) REFERENCES Produtos(id_produtos)
+  precoProdutos DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (pedidoId) REFERENCES Pedidos(idPedidos),
+  FOREIGN KEY (produtoId) REFERENCES Produtos(idProdutos)
 );
 
 CREATE TABLE Pagamentos (
-  id_pagamentos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  pedido_id INT,
-  meio_pagamento VARCHAR(50) NOT NULL,
-  FOREIGN KEY (pedido_id) REFERENCES Pedidos(id_pedidos)
+  idPagamentos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  pedidoId INT,
+  meioPagamento VARCHAR(50) NOT NULL,
+  FOREIGN KEY (pedidoId) REFERENCES Pedidos(idPedidos)
 );
 
-CREATE TABLE Forma_PGTO (
-  pagamento_id INT PRIMARY KEY,
-  forma_pgto VARCHAR(50) NOT NULL,
-  qntd_parcelas INT,
-  FOREIGN KEY (pagamento_id) REFERENCES Pagamentos(id_pagamentos)
+CREATE TABLE FormaPGTO (
+  pagamentoId INT PRIMARY KEY,
+  formaPgto VARCHAR(50) NOT NULL,
+  qntdParcelas INT,
+  FOREIGN KEY (pagamentoId) REFERENCES Pagamentos(idPagamentos)
 );
