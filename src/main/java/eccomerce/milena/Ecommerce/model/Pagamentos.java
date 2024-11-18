@@ -1,11 +1,12 @@
 package eccomerce.milena.Ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.Objects;
-@Entity @Table(name = "pagamentos")
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "pagamentos")
+
 public class Pagamentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +18,6 @@ public class Pagamentos {
 
     @Column
     private String meio_pagamento;
-
-    @OneToMany(mappedBy = "pagamento")
-    @JsonIgnoreProperties("pagamento")
-    private List<FormaPgto> pagamentos;
 
     public Integer getId_pagamentos() {
         return id_pagamentos;
@@ -44,14 +41,6 @@ public class Pagamentos {
 
     public void setMeio_pagamento(String meio_pagamento) {
         this.meio_pagamento = meio_pagamento;
-    }
-
-    public List<FormaPgto> getPagamentos() {
-        return pagamentos;
-    }
-
-    public void setPagamentos(List<FormaPgto> pagamentos) {
-        this.pagamentos = pagamentos;
     }
 
     @Override
