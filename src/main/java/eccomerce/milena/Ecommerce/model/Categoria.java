@@ -11,14 +11,11 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idCategoria")
     private Integer idCategoria;
 
     @Column
     private String nome;
-
-    @OneToMany(mappedBy = "categoria")
-    @JsonIgnoreProperties("categoria")
-    private List<Produto> produtos;
 
     public Integer getIdCategoria() {
         return idCategoria;
@@ -34,13 +31,5 @@ public class Categoria {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
     }
 }
