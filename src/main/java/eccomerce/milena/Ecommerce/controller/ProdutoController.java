@@ -32,7 +32,7 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequestDTO dto) {
-        if(dto.descricao().isEmpty()) {
+        if (dto.descricao().isEmpty() || dto.precoUn() == null || dto.quantidade() == null || dto.cor().isEmpty() || dto.categoriaId() == null) {
             return ResponseEntity.status(428).build();
         }
 
@@ -59,7 +59,7 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody ProdutoRequestDTO dto) {
-        if (dto.descricao().isEmpty()) {
+        if (dto.descricao().isEmpty() || dto.precoUn() == null || dto.quantidade() == null || dto.cor().isEmpty() || dto.categoriaId() == null) {
             return ResponseEntity.status(428).build();
         }
 
