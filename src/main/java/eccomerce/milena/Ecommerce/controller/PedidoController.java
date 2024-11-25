@@ -91,7 +91,7 @@ public class PedidoController {
             ItensPedido itemPedido = new ItensPedido();
             ItensPedidoPK pk = new ItensPedidoPK();
             pk.setPedidoId(pedido.getIdPedidos());
-            pk.setProdutoId(produto.getIdProdutos());
+            pk.setProdutoId(itemDto.produtoId());
             itemPedido.setId(pk);
             itemPedido.setPedido(pedido);
             itemPedido.setProduto(produto);
