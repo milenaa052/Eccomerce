@@ -1,8 +1,10 @@
 package eccomerce.milena.Ecommerce.controller;
 
 import eccomerce.milena.Ecommerce.dto.ProdutoRequestDTO;
+import eccomerce.milena.Ecommerce.model.Categoria;
 import eccomerce.milena.Ecommerce.model.Produto;
 import eccomerce.milena.Ecommerce.repository.ProdutoRepository;
+import eccomerce.milena.Ecommerce.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository repository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     @GetMapping
     public ResponseEntity<List<Produto>> findAll() {
@@ -36,12 +40,15 @@ public class ProdutoController {
             return ResponseEntity.status(428).build();
         }
 
+        Categoria categoria = categoriaRepository.findById(dto.categoriaId())
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+
         Produto produto = new Produto();
         produto.setDescricao(dto.descricao());
         produto.setPrecoUn(dto.precoUn());
         produto.setQuantidade(dto.quantidade());
         produto.setCor(dto.cor());
-        produto.setCategoriaId(dto.categoriaId());
+        produto.setCategoriaId(categoria);
 
         this.repository.save(produto);
         return ResponseEntity.ok(produto);
@@ -67,11 +74,14 @@ public class ProdutoController {
                 .orElseThrow(() ->
                         new IllegalArgumentException("Produto não encontrado"));
 
+        Categoria categoria = categoriaRepository.findById(dto.categoriaId())
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+
         produto.setDescricao(dto.descricao());
         produto.setPrecoUn(dto.precoUn());
         produto.setQuantidade(dto.quantidade());
         produto.setCor(dto.cor());
-        produto.setCategoriaId(dto.categoriaId());
+        produto.setCategoriaId(categoria);
 
         this.repository.save(produto);
         return ResponseEntity.ok(produto);
