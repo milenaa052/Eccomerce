@@ -21,7 +21,7 @@ public class Pedidos {
     @Column
     private Double total;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("pedido")
     private List<ItensPedido> itens;
 
