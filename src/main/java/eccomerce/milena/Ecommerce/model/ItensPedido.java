@@ -1,5 +1,6 @@
 package eccomerce.milena.Ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -16,7 +17,7 @@ public class ItensPedido {
     @ManyToOne
     @MapsId("pedidoId")
     @JoinColumn(name = "pedidoId", referencedColumnName = "IdPedidos")
-    @JsonIgnoreProperties("pedidos")
+    @JsonIgnore
     private Pedidos pedido;
 
     @ManyToOne

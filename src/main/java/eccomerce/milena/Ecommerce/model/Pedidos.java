@@ -3,6 +3,7 @@ package eccomerce.milena.Ecommerce.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +16,17 @@ public class Pedidos {
     private Integer idPedidos;
 
     @Column
-    private Date data;
+    private LocalDate data;
 
     @Column
     private Double total;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("pedido")
-    private List<ItensPedido> itensPedidos;
+    private List<ItensPedido> itens;
+
+    @OneToMany(mappedBy = "pedidoId")
+    private List<Usuario> usuarios;
 
     public Integer getIdPedidos() {
         return idPedidos;
@@ -32,11 +36,11 @@ public class Pedidos {
         this.idPedidos = idPedidos;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
@@ -48,11 +52,19 @@ public class Pedidos {
         this.total = total;
     }
 
-    public List<ItensPedido> getPedidos() {
-        return itensPedidos;
+    public List<ItensPedido> getItensPedidos() {
+        return itens;
     }
 
-    public void setPedidos(List<ItensPedido> itensPedidos) {
-        this.itensPedidos = itensPedidos;
+    public void setItens(List<ItensPedido> itens) {
+        this.itens = itens;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }
