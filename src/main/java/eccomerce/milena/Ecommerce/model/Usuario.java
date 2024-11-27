@@ -20,7 +20,7 @@ public class Usuario {
     @Column
     private String senha;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "pedidoId", referencedColumnName = "idPedidos")
     private Pedidos pedidoId;
 
