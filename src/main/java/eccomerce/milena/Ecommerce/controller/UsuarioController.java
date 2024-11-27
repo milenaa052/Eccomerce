@@ -31,12 +31,14 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> save(@RequestBody UsuarioRequestDTO dto) {
-        if(dto.nome().isEmpty()) {
+        if(dto.nome().isEmpty() || dto.email().isEmpty() || dto.senha().isEmpty()) {
             return ResponseEntity.status(428).build();
         }
 
         Usuario usuario = new Usuario();
         usuario.setNome(dto.nome());
+        usuario.setEmail(dto.email());
+        usuario.setSenha(dto.senha());
 
         this.repository.save(usuario);
         return ResponseEntity.ok(usuario);
@@ -44,7 +46,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Integer id, @RequestBody UsuarioRequestDTO dto) {
-        if (dto.nome().isEmpty()) {
+        if(dto.nome().isEmpty() || dto.email().isEmpty() || dto.senha().isEmpty()) {
             return ResponseEntity.status(428).build();
         }
 
@@ -53,6 +55,8 @@ public class UsuarioController {
                         new IllegalArgumentException("Usuario não encontrada"));
 
         usuario.setNome(dto.nome());
+        usuario.setEmail(dto.email());
+        usuario.setSenha(dto.senha());
 
         this.repository.save(usuario);
         return ResponseEntity.ok(usuario);

@@ -25,6 +25,9 @@ public class Pedidos {
     @JsonIgnoreProperties("pedido")
     private List<ItensPedido> itens;
 
+    @OneToMany(mappedBy = "pedidoId")
+    private List<Usuario> usuarios;
+
     public Integer getIdPedidos() {
         return idPedidos;
     }
@@ -53,7 +56,15 @@ public class Pedidos {
         return itens;
     }
 
-    public void setItensPedidos(List<ItensPedido> itensPedidos) {
-        this.itens = itensPedidos;
+    public void setItens(List<ItensPedido> itens) {
+        this.itens = itens;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }
