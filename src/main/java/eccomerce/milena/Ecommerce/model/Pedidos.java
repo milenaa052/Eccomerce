@@ -1,9 +1,9 @@
 package eccomerce.milena.Ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,18 +15,19 @@ public class Pedidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPedidos;
 
-    @Column
-    private LocalDate data;
+    @Column(name = "data")
+    private Date data;
 
     @Column
     private Double total;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("pedido")
-    private List<ItensPedido> itens;
+    private List<ItensPedido> itensPedidos =new ArrayList<>();
 
-    @OneToMany(mappedBy = "pedidoId")
-    private List<Usuario> usuarios;
+    @ManyToOne
+    @JoinColumn(name = "usuarioId", referencedColumnName = "idUsuario")
+    @JsonIgnore
+    private Usuario usuario;
 
     public Integer getIdPedidos() {
         return idPedidos;
@@ -36,11 +37,11 @@ public class Pedidos {
         this.idPedidos = idPedidos;
     }
 
-    public LocalDate getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
@@ -53,18 +54,18 @@ public class Pedidos {
     }
 
     public List<ItensPedido> getItensPedidos() {
-        return itens;
+        return itensPedidos;
     }
 
-    public void setItens(List<ItensPedido> itens) {
-        this.itens = itens;
+    public void setItensPedidos(List<ItensPedido> itensPedidos) {
+        this.itensPedidos = itensPedidos;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
