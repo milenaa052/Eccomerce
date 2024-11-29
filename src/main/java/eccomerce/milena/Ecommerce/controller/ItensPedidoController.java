@@ -120,6 +120,13 @@ public class ItensPedidoController {
         item.setQuantidade(dto.quantidade());
         item.setPrecoProdutos(produto.getPrecoUn() * dto.quantidade());
 
+        Pedidos pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+
+
+        pedido.setTotal(pedido.getTotal() + produto.getPrecoUn());
+        pedidoRepository.save(pedido);
+
         itensPedidoRepository.save(item);
         return ResponseEntity.ok(item);
     }
@@ -136,6 +143,13 @@ public class ItensPedidoController {
         Produto produto = item.getProduto();
         produto.setQuantidade(produto.getQuantidade() + item.getQuantidade());
         produtoRepository.save(produto);
+
+        Pedidos pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+
+        double novoTotal = pedido.getTotal() - item.getPrecoProdutos();
+        pedido.setTotal(novoTotal < 0 ? 0 : novoTotal);
+        pedidoRepository.save(pedido);
 
         itensPedidoRepository.delete(item);
         return ResponseEntity.noContent().build();
