@@ -1,17 +1,16 @@
 package eccomerce.milena.Ecommerce.controller;
 
 import eccomerce.milena.Ecommerce.dto.ItensPedidoRequestDTO;
-import eccomerce.milena.Ecommerce.model.ItensPedido;
-import eccomerce.milena.Ecommerce.model.ItensPedidoPK;
-import eccomerce.milena.Ecommerce.model.Pedidos;
-import eccomerce.milena.Ecommerce.model.Produto;
+import eccomerce.milena.Ecommerce.model.*;
 import eccomerce.milena.Ecommerce.repository.ItensPedidoRepository;
 import eccomerce.milena.Ecommerce.repository.PedidoRepository;
 import eccomerce.milena.Ecommerce.repository.ProdutoRepository;
+import eccomerce.milena.Ecommerce.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +25,9 @@ public class ItensPedidoController {
 
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
     public ResponseEntity<List<ItensPedido>> findAll() {
@@ -43,33 +45,53 @@ public class ItensPedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<ItensPedido> save(@RequestBody ItensPedidoRequestDTO dto) {
-        Pedidos pedido = pedidoRepository.findById(dto.pedidoId())
-                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+    public ResponseEntity<List<ItensPedido>> save(@RequestBody List<ItensPedidoRequestDTO> itens, @RequestParam Integer usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        Produto produto = produtoRepository.findById(dto.produtoId())
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
 
-        if (produto.getQuantidade() < dto.quantidade()) {
-            return ResponseEntity.status(400).body(null);
+        Pedidos pedido = new Pedidos();
+        pedido.setUsuario(usuario);
+        pedido.setData(new Date());
+
+        double total = processarItensPedido(pedido, itens);
+        pedido.setTotal(total);
+
+        pedidoRepository.save(pedido);
+        return ResponseEntity.ok(pedido.getItensPedidos());
+    }
+
+    private double processarItensPedido(Pedidos pedido, List<ItensPedidoRequestDTO> itens) {
+        double total = 0;
+
+        for (ItensPedidoRequestDTO itemDto : itens) {
+            Produto produto = produtoRepository.findById(itemDto.produtoId())
+                    .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+            if (produto.getQuantidade() < itemDto.quantidade()) {
+                throw new IllegalArgumentException("Quantidade indisponível para o produto: " + produto.getDescricao());
+            }
+
+            produto.setQuantidade(produto.getQuantidade() - itemDto.quantidade());
+            produtoRepository.save(produto);
+
+            ItensPedidoPK pk = new ItensPedidoPK();
+            pk.setPedidoId(pedido.getIdPedidos());
+            pk.setProdutoId(produto.getIdProdutos());
+
+            ItensPedido item = new ItensPedido();
+            item.setId(pk);
+            item.setPedido(pedido);
+            item.setProduto(produto);
+            item.setQuantidade(itemDto.quantidade());
+            item.setPrecoProdutos(produto.getPrecoUn() * itemDto.quantidade());
+
+            pedido.getItensPedidos().add(item);
+
+            total += item.getPrecoProdutos();
         }
 
-        produto.setQuantidade(produto.getQuantidade() - dto.quantidade());
-        produtoRepository.save(produto);
-
-        ItensPedidoPK pk = new ItensPedidoPK();
-        pk.setPedidoId(pedido.getIdPedidos());
-        pk.setProdutoId(produto.getIdProdutos());
-
-        ItensPedido item = new ItensPedido();
-        item.setId(pk);
-        item.setPedido(pedido);
-        item.setProduto(produto);
-        item.setQuantidade(dto.quantidade());
-        item.setPrecoProdutos(produto.getPrecoUn() * dto.quantidade());
-
-        itensPedidoRepository.save(item);
-        return ResponseEntity.ok(item);
+        return total;
     }
 
     @PutMapping("/{pedidoId}/{produtoId}")
@@ -98,6 +120,13 @@ public class ItensPedidoController {
         item.setQuantidade(dto.quantidade());
         item.setPrecoProdutos(produto.getPrecoUn() * dto.quantidade());
 
+        Pedidos pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+
+
+        pedido.setTotal(pedido.getTotal() + produto.getPrecoUn());
+        pedidoRepository.save(pedido);
+
         itensPedidoRepository.save(item);
         return ResponseEntity.ok(item);
     }
@@ -114,6 +143,13 @@ public class ItensPedidoController {
         Produto produto = item.getProduto();
         produto.setQuantidade(produto.getQuantidade() + item.getQuantidade());
         produtoRepository.save(produto);
+
+        Pedidos pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+
+        double novoTotal = pedido.getTotal() - item.getPrecoProdutos();
+        pedido.setTotal(novoTotal < 0 ? 0 : novoTotal);
+        pedidoRepository.save(pedido);
 
         itensPedidoRepository.delete(item);
         return ResponseEntity.noContent().build();

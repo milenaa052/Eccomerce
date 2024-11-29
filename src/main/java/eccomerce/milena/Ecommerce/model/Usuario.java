@@ -1,6 +1,8 @@
 package eccomerce.milena.Ecommerce.model;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,9 +22,8 @@ public class Usuario {
     @Column
     private String senha;
 
-    @ManyToOne
-    @JoinColumn(name = "pedidoId", referencedColumnName = "idPedidos")
-    private Pedidos pedidoId;
+    @OneToMany(mappedBy = "usuario")
+    private List<Pedidos> pedidos;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -56,12 +57,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Pedidos getPedidosId() {
-        return pedidoId;
+    public List<Pedidos> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedidosId(Pedidos pedidoId) {
-        this.pedidoId = pedidoId;
+    public void setPedidos(List<Pedidos> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override
@@ -69,11 +70,11 @@ public class Usuario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(idUsuario, usuario.idUsuario) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && Objects.equals(pedidoId, usuario.pedidoId);
+        return Objects.equals(idUsuario, usuario.idUsuario) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && Objects.equals(pedidos, usuario.pedidos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUsuario, nome, email, senha, pedidoId);
+        return Objects.hash(idUsuario, nome, email, senha, pedidos);
     }
 }

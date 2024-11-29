@@ -1,3 +1,10 @@
+CREATE TABLE Usuarios (
+    idUsuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE Categorias (
   idCategoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL
@@ -15,8 +22,10 @@ CREATE TABLE Produtos (
 
 CREATE TABLE Pedidos (
   idPedidos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  data DATE NOT NULL,
-  total DECIMAL(10,2) NOT NULL
+  data DATETIME NOT NULL,
+  total DECIMAL(10,2) NOT NULL,
+  usuarioId INT,
+  FOREIGN KEY (usuarioId) REFERENCES Usuarios(idUsuario)
 );
 
 CREATE TABLE ItensPedido (
@@ -41,13 +50,4 @@ CREATE TABLE FormaPGTO (
   formaPgto VARCHAR(50) NOT NULL,
   qntdParcelas INT,
   FOREIGN KEY (pagamentoId) REFERENCES Pagamentos(idPagamentos)
-);
-
-CREATE TABLE Usuarios (
-    idUsuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    senha VARCHAR(100) NOT NULL,
-    pedidoId INT,
-    FOREIGN KEY (pedidoId) REFERENCES Pedidos(idPedidos)
 );
