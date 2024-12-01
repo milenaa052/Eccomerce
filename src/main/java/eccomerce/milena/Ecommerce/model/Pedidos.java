@@ -18,7 +18,7 @@ public class Pedidos {
     @Column(name = "data")
     private Date data;
 
-    @Column
+    @Column(name = "total", nullable = false)
     private Double total;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)

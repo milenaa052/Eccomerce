@@ -7,17 +7,20 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Pagamentos")
 
-public class Pagamentos {
+public abstract class Pagamentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPagamentos;
 
     @OneToOne
     @JoinColumn(name = "pedidoId", referencedColumnName = "idPedidos")
-    private Pedidos pedido;
+    private Pedidos pedidoId;
 
-    @Column
-    private String meioPagamento;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "meioPagamento", nullable = false)
+    private MeioPagamento meioPagamento;
+
+    public abstract void processarPagamento();
 
     public Integer getIdPagamentos() {
         return idPagamentos;
@@ -27,19 +30,19 @@ public class Pagamentos {
         this.idPagamentos = idPagamentos;
     }
 
-    public Pedidos getPedido() {
-        return pedido;
+    public Pedidos getPedidoId() {
+        return pedidoId;
     }
 
-    public void setPedido(Pedidos pedido) {
-        this.pedido = pedido;
+    public void setPedidoId(Pedidos pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
-    public String getMeioPagamento() {
+    public MeioPagamento getMeioPagamento() {
         return meioPagamento;
     }
 
-    public void setMeioPagamento(String meioPagamento) {
+    public void setMeioPagamento(MeioPagamento meioPagamento) {
         this.meioPagamento = meioPagamento;
     }
 
@@ -48,11 +51,11 @@ public class Pagamentos {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pagamentos that = (Pagamentos) o;
-        return Objects.equals(idPagamentos, that.idPagamentos) && Objects.equals(pedido, that.pedido) && Objects.equals(meioPagamento, that.meioPagamento);
+        return Objects.equals(idPagamentos, that.idPagamentos) && Objects.equals(pedidoId, that.pedidoId) && meioPagamento == that.meioPagamento;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPagamentos, pedido, meioPagamento);
+        return Objects.hash(idPagamentos, pedidoId, meioPagamento);
     }
 }
