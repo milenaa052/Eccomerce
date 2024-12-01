@@ -46,8 +46,8 @@ CREATE TABLE Pagamentos (
 );
 
 CREATE TABLE FormaPGTO (
-  pagamentoId INT PRIMARY KEY,
+  idPagamentos INT PRIMARY KEY NOT NULL,
   formaPgto VARCHAR(50) NOT NULL,
   qntdParcelas INT,
-  FOREIGN KEY (pagamentoId) REFERENCES Pagamentos(idPagamentos)
+  FOREIGN KEY (idPagamentos) REFERENCES Pagamentos(idPagamentos)
 );
