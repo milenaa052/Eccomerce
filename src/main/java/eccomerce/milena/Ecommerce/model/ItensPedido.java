@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "ItensPedido")
 public class ItensPedido {

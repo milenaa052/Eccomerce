@@ -1,9 +1,6 @@
 package eccomerce.milena.Ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.Objects;
 
 @Entity
