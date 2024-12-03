@@ -1,57 +1,49 @@
 package eccomerce.milena.Ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.Objects;
-@Entity @Table(name = "pagamentos")
-public class Pagamentos {
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Pagamentos")
+
+public abstract class Pagamentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pagamentos;
+    private Integer idPagamentos;
 
     @OneToOne
-    @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedidos")
-    private Pedidos pedido;
+    @JoinColumn(name = "pedidoId", referencedColumnName = "idPedidos")
+    private Pedidos pedidoId;
 
-    @Column
-    private String meio_pagamento;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "meioPagamento", nullable = false)
+    private MeioPagamento meioPagamento;
 
-    @OneToMany(mappedBy = "pagamento")
-    @JsonIgnoreProperties("pagamento")
-    private List<FormaPgto> pagamentos;
+    public abstract void processarPagamento();
 
-    public Integer getId_pagamentos() {
-        return id_pagamentos;
+    public Integer getIdPagamentos() {
+        return idPagamentos;
     }
 
-    public void setId_pagamentos(Integer id_pagamentos) {
-        this.id_pagamentos = id_pagamentos;
+    public void setIdPagamentos(Integer idPagamentos) {
+        this.idPagamentos = idPagamentos;
     }
 
-    public Pedidos getPedido() {
-        return pedido;
+    public Pedidos getPedidoId() {
+        return pedidoId;
     }
 
-    public void setPedido(Pedidos pedido) {
-        this.pedido = pedido;
+    public void setPedidoId(Pedidos pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
-    public String getMeio_pagamento() {
-        return meio_pagamento;
+    public MeioPagamento getMeioPagamento() {
+        return meioPagamento;
     }
 
-    public void setMeio_pagamento(String meio_pagamento) {
-        this.meio_pagamento = meio_pagamento;
-    }
-
-    public List<FormaPgto> getPagamentos() {
-        return pagamentos;
-    }
-
-    public void setPagamentos(List<FormaPgto> pagamentos) {
-        this.pagamentos = pagamentos;
+    public void setMeioPagamento(MeioPagamento meioPagamento) {
+        this.meioPagamento = meioPagamento;
     }
 
     @Override
@@ -59,11 +51,11 @@ public class Pagamentos {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pagamentos that = (Pagamentos) o;
-        return Objects.equals(id_pagamentos, that.id_pagamentos) && Objects.equals(pedido, that.pedido) && Objects.equals(meio_pagamento, that.meio_pagamento);
+        return Objects.equals(idPagamentos, that.idPagamentos) && Objects.equals(pedidoId, that.pedidoId) && meioPagamento == that.meioPagamento;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_pagamentos, pedido, meio_pagamento);
+        return Objects.hash(idPagamentos, pedidoId, meioPagamento);
     }
 }

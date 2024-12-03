@@ -1,36 +1,42 @@
 package eccomerce.milena.Ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.Objects;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
-@Table(name = "itens_pedido")
+@Table(name = "ItensPedido")
 public class ItensPedido {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idItensPedido;
+
+    @EmbeddedId
+    private ItensPedidoPK id;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedidos")
+    @MapsId("pedidoId")
+    @JoinColumn(name = "pedidoId", referencedColumnName = "IdPedidos")
+    @JsonIgnore
     private Pedidos pedido;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id", referencedColumnName = "id_produtos")
+    @MapsId("produtoId")
+    @JoinColumn(name = "produtoId", referencedColumnName = "idProdutos")
+    @JsonIgnoreProperties("produtos")
     private Produto produto;
 
     @Column
     private Integer quantidade;
 
-    @Column
-    private Double preco_produtos;
+    @Column(nullable = false)
+    @PositiveOrZero
+    private Double precoProdutos;
 
-    public Integer getIdItensPedido() {
-        return idItensPedido;
+    public ItensPedidoPK getId() {
+        return id;
     }
 
-    public void setIdItensPedido(Integer idItensPedido) {
-        this.idItensPedido = idItensPedido;
+    public void setId(ItensPedidoPK id) {
+        this.id = id;
     }
 
     public Pedidos getPedido() {
@@ -57,24 +63,11 @@ public class ItensPedido {
         this.quantidade = quantidade;
     }
 
-    public Number getPreco_produtos() {
-        return preco_produtos;
+    public Double getPrecoProdutos() {
+        return precoProdutos;
     }
 
-    public void setPreco_produtos(Double preco_produtos) {
-        this.preco_produtos = preco_produtos;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItensPedido that = (ItensPedido) o;
-        return Objects.equals(idItensPedido, that.idItensPedido) && Objects.equals(pedido, that.pedido) && Objects.equals(produto, that.produto) && Objects.equals(quantidade, that.quantidade) && Objects.equals(preco_produtos, that.preco_produtos);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idItensPedido, pedido, produto, quantidade, preco_produtos);
+    public void setPrecoProdutos(Double precoProdutos) {
+        this.precoProdutos = precoProdutos;
     }
 }

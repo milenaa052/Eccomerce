@@ -1,35 +1,40 @@
 package eccomerce.milena.Ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "pedidos")
+@Table(name = "Pedidos")
 public class Pedidos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pedidos;
+    private Integer idPedidos;
 
-    @Column
+    @Column(name = "data")
     private Date data;
 
-    @Column
+    @Column(name = "total", nullable = false)
     private Double total;
 
-    @OneToMany(mappedBy = "pedido")
-    @JsonIgnoreProperties("pedido")
-    private List<ItensPedido> pedidos;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItensPedido> itensPedidos =new ArrayList<>();
 
-    public Integer getId_pedidos() {
-        return id_pedidos;
+    @ManyToOne
+    @JoinColumn(name = "usuarioId", referencedColumnName = "idUsuario")
+    @JsonIgnore
+    private Usuario usuario;
+
+    public Integer getIdPedidos() {
+        return idPedidos;
     }
 
-    public void setId_pedidos(Integer id_pedidos) {
-        this.id_pedidos = id_pedidos;
+    public void setIdPedidos(Integer idPedidos) {
+        this.idPedidos = idPedidos;
     }
 
     public Date getData() {
@@ -48,11 +53,19 @@ public class Pedidos {
         this.total = total;
     }
 
-    public List<ItensPedido> getPedidos() {
-        return pedidos;
+    public List<ItensPedido> getItensPedidos() {
+        return itensPedidos;
     }
 
-    public void setPedidos(List<ItensPedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setItensPedidos(List<ItensPedido> itensPedidos) {
+        this.itensPedidos = itensPedidos;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
