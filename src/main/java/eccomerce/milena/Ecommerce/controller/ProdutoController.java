@@ -87,4 +87,30 @@ public class ProdutoController {
         return ResponseEntity.ok(produto);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Produto> partialUpdate(@PathVariable Integer id, @RequestBody ProdutoRequestDTO dto) {
+        Produto produto = this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+        if (dto.descricao() != null && !dto.descricao().isEmpty()) {
+            produto.setDescricao(dto.descricao());
+        }
+        if (dto.precoUn() != null) {
+            produto.setPrecoUn(dto.precoUn());
+        }
+        if (dto.quantidade() != null) {
+            produto.setQuantidade(dto.quantidade());
+        }
+        if (dto.cor() != null && !dto.cor().isEmpty()) {
+            produto.setCor(dto.cor());
+        }
+        if (dto.categoriaId() != null) {
+            Categoria categoria = categoriaRepository.findById(dto.categoriaId())
+                    .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+            produto.setCategoriaId(categoria);
+        }
+
+        this.repository.save(produto);
+        return ResponseEntity.ok(produto);
+    }
 }
