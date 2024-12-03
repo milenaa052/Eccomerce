@@ -62,6 +62,25 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Usuario> partialUpdate(@PathVariable Integer id, @RequestBody UsuarioRequestDTO dto) {
+        Usuario usuario = this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        if (dto.nome() != null && !dto.nome().isEmpty()) {
+            usuario.setNome(dto.nome());
+        }
+        if (dto.email() != null && !dto.email().isEmpty()) {
+            usuario.setEmail(dto.email());
+        }
+        if (dto.senha() != null && !dto.senha().isEmpty()) {
+            usuario.setSenha(dto.senha());
+        }
+
+        this.repository.save(usuario);
+        return ResponseEntity.ok(usuario);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Usuario usuario = this.repository.findById(id)
