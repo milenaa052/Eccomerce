@@ -29,6 +29,15 @@ public class Pedidos {
     @JsonIgnore
     private Usuario usuario;
 
+    @ManyToMany
+    @JoinTable(
+            name = "ItensPedido",
+            joinColumns = @JoinColumn(name = "pedidoId", referencedColumnName = "idPedidos"),
+            inverseJoinColumns = @JoinColumn(name = "produtoId", referencedColumnName = "idProdutos")
+    )
+    @JsonIgnore
+    private List<Produto> produtos = new ArrayList<>();
+
     public Integer getIdPedidos() {
         return idPedidos;
     }
@@ -67,5 +76,13 @@ public class Pedidos {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }
