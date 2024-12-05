@@ -38,13 +38,18 @@ public class PagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<FormaPGTO> save(@RequestBody FormaPgtoRequestDTO dto) {
+    public ResponseEntity<Object> save(@RequestBody FormaPgtoRequestDTO dto) {
         if (dto.pedidoId() == null || dto.meioPagamento() == null || dto.formaPgto() == null || dto.qntdParcelas() == null) {
             return ResponseEntity.status(428).body(null);
         }
 
         Pedidos pedido = pedidoRepository.findById(dto.pedidoId())
                 .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+
+        boolean pagamentoExistente = formaPgtoRepository.existsByPedidoId(pedido);
+        if (pagamentoExistente) {
+            return ResponseEntity.status(400).body("Pagamento para o pedido " + dto.pedidoId() + " já foi realizado.");
+        }
 
         FormaPGTO pagamento = new FormaPGTO();
         pagamento.setPedidoId(pedido);
